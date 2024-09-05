@@ -61,9 +61,10 @@ struct DessertDetailContentView: View {
                 ForEach(mealDetail.allIngredientsWithMeasures.sorted(by: >), id: \.key) { ingredient, measure in
                     
                     HStack {
-                        Image(systemName: "square.and.arrow.up")
+                        Image(systemName: "questionmark.app.fill")
                             .resizable()
                             .frame(width: 30, height: 30)
+                            .opacity(0.3)
                         
                         VStack(alignment: .leading) {
                             Text(ingredient)
