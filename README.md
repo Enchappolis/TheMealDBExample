@@ -25,7 +25,9 @@ The app has several limitations.
 - The API also does not support pagination.
 
 ### Screen
-![screenshots](https://github.com/user-attachments/assets/7bd4230f-bfd5-4e17-924d-f37b373b3fd7)
+![screenshots](https://github.com/user-attachments/assets/08bb743b-928f-46d8-afc2-bffd994ffc25)
+
+
 
 
 
