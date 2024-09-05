@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1215234F2C8A559600C51E52 /* HorizontalLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1215234E2C8A559600C51E52 /* HorizontalLine.swift */; };
 		122418EE2C739B3200075DF6 /* TheMealDBExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122418ED2C739B3200075DF6 /* TheMealDBExampleApp.swift */; };
 		122418F22C739B3300075DF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 122418F12C739B3300075DF6 /* Assets.xcassets */; };
 		122418F52C739B3300075DF6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 122418F42C739B3300075DF6 /* Preview Assets.xcassets */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1215234E2C8A559600C51E52 /* HorizontalLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalLine.swift; sourceTree = "<group>"; };
 		122418EA2C739B3200075DF6 /* TheMealDBExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMealDBExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		122418ED2C739B3200075DF6 /* TheMealDBExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMealDBExampleApp.swift; sourceTree = "<group>"; };
 		122418F12C739B3300075DF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				1224193A2C73D29700075DF6 /* ErrorView.swift */,
 				123BD7482C744FB700E50CE3 /* ReusableToolbarContent.swift */,
 				127EEA092C76AC9500B7E178 /* YouTubeButton.swift */,
+				1215234E2C8A559600C51E52 /* HorizontalLine.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				122418EE2C739B3200075DF6 /* TheMealDBExampleApp.swift in Sources */,
 				122419172C73A3EA00075DF6 /* DessertView.swift in Sources */,
 				122419412C73F9CC00075DF6 /* ImageSymbols.swift in Sources */,
+				1215234F2C8A559600C51E52 /* HorizontalLine.swift in Sources */,
 				122419202C73A52E00075DF6 /* ImageCacheManager.swift in Sources */,
 				122419312C73B83F00075DF6 /* NetworkError.swift in Sources */,
 				122419432C73FD4300075DF6 /* ColorTheme.swift in Sources */,

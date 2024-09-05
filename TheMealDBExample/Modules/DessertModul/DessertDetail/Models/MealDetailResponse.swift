@@ -119,7 +119,7 @@ struct MealDetail: Codable {
 
 extension MealDetail {
     
-    var allIngredients: String {
+    private var allIngredients: [String] {
         
         let ingredients = [
             ingredient1,
@@ -145,10 +145,10 @@ extension MealDetail {
 
         ].compactMap{$0}
         
-        return ingredients.filter { !$0.isEmpty && $0 != " " }.joined(separator: ", ")
+        return ingredients.filter { !$0.isEmpty && $0 != " " }
     }
     
-    var allMeasures: String {
+    private var allMeasures: [String] {
         
         let measures = [
             measure1,
@@ -174,6 +174,24 @@ extension MealDetail {
         
         ].compactMap{$0}
         
-        return measures.filter{ !$0.isEmpty && $0 != " "}.joined(separator: ", ")
+        return measures.filter{ !$0.isEmpty && $0 != " "}
+    }
+    
+    // key = ingredient, value = measure.
+    var allIngredientsWithMeasures: [String: String] {
+            
+        var allIngredientsWithMeasures: [String: String] = [:]
+        
+        // For each ingredient, get also the measure.
+        for (index, ingredient) in allIngredients.enumerated() {
+            
+            // Make sure the ingredient index is not out of bound of allMeasures,
+            // in case number of ingredients and number of measures is not same.
+            let measure = index < allMeasures.count ? allMeasures[index] : ""
+            
+            allIngredientsWithMeasures[ingredient] = measure
+        }
+        
+        return allIngredientsWithMeasures
     }
 }

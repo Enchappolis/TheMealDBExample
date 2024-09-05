@@ -48,32 +48,10 @@ struct DessertDetailContentView: View {
                 .font(.headline)
                 .padding(.bottom, 10)
             
-            Text("Ingredients:")
-                .font(.subheadline)
-                .fontWeight(.bold)
-                .padding(.bottom, 2)
-            
-            Text(mealDetail.allIngredients)
-                .font(.footnote)
+            ingredients
                 .padding(.bottom, 10)
             
-            Text("Measures:")
-                .font(.subheadline)
-                .fontWeight(.bold)
-                .padding(.bottom, 2)
-            
-            Text(mealDetail.allMeasures)
-                .font(.footnote)
-                .padding(.bottom, 10)
-            
-            Text("Instructions:")
-                .font(.subheadline)
-                .fontWeight(.bold)
-                .padding(.bottom, 2)
-            
-            Text(mealDetail.instructions ?? "")
-                .font(.footnote)
-                .lineLimit(showMore ? nil : 5)
+            instructions
             
             Label(showMore ? "Show less" : "Show more", systemImage: showMore ? ImageSymbols.chevronUp.name : ImageSymbols.chevronDown.name)
                 .font(.subheadline)
@@ -91,6 +69,70 @@ struct DessertDetailContentView: View {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(.gray, lineWidth: 1)
         )
+    }
+    
+    var ingredients: some View {
+        
+        VStack(alignment: .leading) {
+            
+            Text("Ingredients:")
+                .font(.subheadline)
+                .fontWeight(.bold)
+                .padding(.bottom, 2)
+
+            HorizontalLine()
+                .offset(y: -6)
+            
+            ForEach(mealDetail.allIngredientsWithMeasures.sorted(by: >), id: \.key) { ingredient, measure in
+                
+                HStack {
+                    
+                    ingredientImage(name: ingredient)
+                        .frame(width: 60, height: 60)
+                    
+                    VStack(alignment: .leading) {
+                        Text(ingredient)
+                            .font(.subheadline)
+                        
+                        Text(measure)
+                            .font(.subheadline)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 8)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Divider()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func ingredientImage(name: String) -> some View {
+        
+        let endpoint = APIEndpoint.ingredientImage(imageName: name)
+        
+        if let url = endpoint.url {
+            AsyncImageLoaderView(imageURL: url, cornerRadius: 10)
+        } else {
+            Image(systemName: "questionmark.app.fill")
+        }
+    }
+    
+    @ViewBuilder
+    var instructions: some View {
+        
+        Text("Instructions:")
+            .font(.subheadline)
+            .fontWeight(.bold)
+            .padding(.bottom, 2)
+            
+        HorizontalLine()
+            .offset(y: -6)
+        
+        Text(mealDetail.instructions ?? "")
+            .font(.subheadline)
+            .lineLimit(showMore ? nil : 5)
     }
 }
 
