@@ -52,27 +52,44 @@ struct DessertDetailContentView: View {
                 .font(.subheadline)
                 .fontWeight(.bold)
                 .padding(.bottom, 2)
-            
-            Text(mealDetail.allIngredients)
-                .font(.footnote)
-                .padding(.bottom, 10)
-            
-            Text("Measures:")
-                .font(.subheadline)
-                .fontWeight(.bold)
-                .padding(.bottom, 2)
-            
-            Text(mealDetail.allMeasures)
-                .font(.footnote)
-                .padding(.bottom, 10)
+
+            HorizontalLine()
+                .offset(y: -6)
+
+            VStack(alignment: .leading) {
+                
+                ForEach(mealDetail.allIngredientsWithMeasures.sorted(by: >), id: \.key) { ingredient, measure in
+                    
+                    HStack {
+                        Image(systemName: "square.and.arrow.up")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                        
+                        VStack(alignment: .leading) {
+                            Text(ingredient)
+                                .font(.subheadline)
+                            
+                            Text(measure)
+                                .font(.subheadline)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 8)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding(.bottom, 10)
             
             Text("Instructions:")
                 .font(.subheadline)
                 .fontWeight(.bold)
                 .padding(.bottom, 2)
+                
+            HorizontalLine()
+                .offset(y: -6)
             
             Text(mealDetail.instructions ?? "")
-                .font(.footnote)
+                .font(.subheadline)
                 .lineLimit(showMore ? nil : 5)
             
             Label(showMore ? "Show less" : "Show more", systemImage: showMore ? ImageSymbols.chevronUp.name : ImageSymbols.chevronDown.name)
