@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 class DessertDetailViewModel: ObservableObject {
     
     @Published private(set) var state: MealDetailViewState = .idle
@@ -17,7 +18,6 @@ class DessertDetailViewModel: ObservableObject {
         self.apiClient = apiClient
     }
 
-    @MainActor
     func fetchMealDetail(id: String) async {
         
         guard state != .loading else { return }

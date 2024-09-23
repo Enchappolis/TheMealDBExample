@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ImageCacheManager {
+actor ImageCacheManager {
     
     private let fileManager = FileManager.default
     private let cacheDirectory: URL
@@ -22,7 +22,7 @@ class ImageCacheManager {
         }
     }
     
-    func cacheImage(_ image: UIImage, for url: URL?) {
+    private func cacheImage(_ image: UIImage, for url: URL?) {
         
         guard let url else { return }
         
@@ -72,7 +72,7 @@ class ImageCacheManager {
         // Fetch from network if image is not in any cache.
         do {
             
-            let (data, _) = try await URLSession.shared.data(from: url)
+            let data = try await fetchImageFromNetwork(url: url)
            
             if let uiImage = UIImage(data: data) {
                 cacheImage(uiImage, for: url)
@@ -84,6 +84,24 @@ class ImageCacheManager {
         }
         
         return nil
+    }
+    
+    // Fetch data using a continuation to avoid warnings about non-Sendable types.
+    private func fetchImageFromNetwork(url: URL) async throws -> Data {
+       
+        try await withCheckedThrowingContinuation { continuation in
+            
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else if let data = data, let _ = response {
+                    continuation.resume(returning: (data))
+                } else {
+                    continuation.resume(throwing: URLError(.unknown))
+                }
+            }
+            task.resume()
+        }
     }
     
     func clearAllCaches() {

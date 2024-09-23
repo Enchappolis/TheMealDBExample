@@ -40,6 +40,7 @@ struct AsyncImageLoaderView: View {
         }
     }
     
+    @MainActor
     private func loadImage() async {
         isLoading = true
         self.image = await cache.fetchImage(from: imageURL)

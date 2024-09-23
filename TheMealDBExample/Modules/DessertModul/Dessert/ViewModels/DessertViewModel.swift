@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 class DessertViewModel: ObservableObject {
     
     @Published var state: MealsViewState = .idle
@@ -23,7 +24,6 @@ class DessertViewModel: ObservableObject {
         self.apiClient = apiClient
     }
     
-    @MainActor
     func fetchDesserts() async {
         
         guard state != .loading else { return }
@@ -43,7 +43,6 @@ class DessertViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func searchMeals(query: String) {
         searchTask?.cancel()
         
@@ -55,7 +54,6 @@ class DessertViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     private func performSearch(query: String) async {
         
         if query.isEmpty {
@@ -69,11 +67,10 @@ class DessertViewModel: ObservableObject {
         }
     }
     
-    @MainActor
     func refreshDesserts(category: MealCategory) async {
         
         // Clear all caches when pulled to refresh.
-        cache.clearAllCaches()
+        await cache.clearAllCaches()
         
         await fetchDesserts()
     }

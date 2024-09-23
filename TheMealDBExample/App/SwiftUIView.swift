@@ -18,13 +18,15 @@ struct SwiftUIView: View {
             LaunchScreenColor.launchScreenColor
                 .ignoresSafeArea()
             
-            if self.isActive {
+            if self.isActive && isProduction() {
                 DessertView()
-            } else {
+            } else if isProduction() {
                 Image("Lauchicon")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 200)
+            } else {
+                EmptyView()
             }
         }
         .onAppear {
@@ -34,6 +36,10 @@ struct SwiftUIView: View {
                 }
             }
         }
+    }
+    
+    private func isProduction() -> Bool {
+        return NSClassFromString("XCTestCase") == nil
     }
 }
 

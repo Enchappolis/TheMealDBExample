@@ -12,7 +12,7 @@ final class NetworkManagerTests: NetworkManagerTesting {
 
     func test_response_is_valid() async throws {
         
-        let networkManager = try getMockNetworkManagerUsingDataFrom(file: "MockMealResponse")
+        let networkManager = try await getMockNetworkManagerUsingDataFrom(file: "MockMealResponse")
         
         XCTAssertNotNil(networkManager, "NetworkManager is nil")
         
@@ -31,7 +31,7 @@ final class NetworkManagerTests: NetworkManagerTesting {
         
         let statusCodeUnauthorized = 401
         
-        let networkManager = try getMockNetworkManagerUsingDataFrom(file: "MockMealResponse",
+        let networkManager = try await getMockNetworkManagerUsingDataFrom(file: "MockMealResponse",
                                                                     withStatusCode: statusCodeUnauthorized)
         
         XCTAssertNotNil(networkManager, "NetworkManager is nil")

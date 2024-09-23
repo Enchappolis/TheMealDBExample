@@ -15,20 +15,21 @@ class NetworkManagerTesting: XCTestCase {
     private var session: URLSession!
     private var url: URL!
     
-    override func setUpWithError() throws {
+    override func setUp() async throws {
+        
         url = URL(string: "https://themealdb.com/api/json/v1/1")
         
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [MockURLProtocol.self]
         session = URLSession(configuration: configuration)
     }
-
-    override func tearDownWithError() throws {
+    
+    override func tearDown() async throws {
         session = nil
         url = nil
     }
     
-    func getMockNetworkManagerUsingDataFrom(file: String, withStatusCode: Int = 200) throws -> NetworkManagerProtocol? {
+    func getMockNetworkManagerUsingDataFrom(file: String, withStatusCode: Int = 200) async throws -> NetworkManagerProtocol? {
         
         let data = try MockData.getDataFrom(fileName: file)
         
@@ -39,7 +40,7 @@ class NetworkManagerTesting: XCTestCase {
             return (response!, data)
         }
         
-        let networkManager = NetworkManager.shared(urlSession: session)
+        let networkManager = NetworkManager.init(urlSession: session)
         
         return networkManager
     }

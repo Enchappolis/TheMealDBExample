@@ -12,7 +12,7 @@ final class APIClientTests: NetworkManagerTesting {
 
     func test_fetch_dessert_is_valid() async throws {
 
-        let networkManager = try getMockNetworkManagerUsingDataFrom(file: "MockMealResponse")
+        let networkManager = try await getMockNetworkManagerUsingDataFrom(file: "MockMealResponse")
         
         XCTAssertNotNil(networkManager, "NetworkManager is nil")
         

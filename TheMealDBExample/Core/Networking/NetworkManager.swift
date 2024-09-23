@@ -7,29 +7,22 @@
 
 import Foundation
 
-protocol NetworkManagerProtocol {
+protocol NetworkManagerProtocol: Sendable {
     func request<T: Decodable>(endpoint: APIEndpoint,
                                responseType: T.Type) async throws -> T
 }
 
-final class NetworkManager: NetworkManagerProtocol {
+actor NetworkManager: NetworkManagerProtocol {
     
-    static var shared = NetworkManager()
+    static let shared = NetworkManager(urlSession: URLSession.shared)
     
-    let urlSession: URLSession
+    private let urlSession: URLSession
     
-    private init(urlSession: URLSession = .shared) {
+    init(urlSession: URLSession = .shared) {
         self.urlSession = urlSession
     }
     
-    static func shared(urlSession: URLSession = .shared) -> NetworkManager {
-        let networkManager = NetworkManager(urlSession: urlSession)
-        shared = networkManager
-        return networkManager
-    }
-    
-    @MainActor
-    func request<T: Decodable>(endpoint: APIEndpoint,
+    func request<T: Decodable & Sendable>(endpoint: APIEndpoint,
                                responseType: T.Type) async throws -> T {
        
         guard let url = endpoint.url else {
@@ -40,7 +33,7 @@ final class NetworkManager: NetworkManagerProtocol {
             
             let request = buildRequest(from: url, methodType: endpoint.methodType)
             
-            let (data, response) = try await urlSession.data(for: request)
+            let (data, response) = try await fetchData(with: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw NetworkError.invalidResponse
@@ -97,5 +90,21 @@ final class NetworkManager: NetworkManagerProtocol {
             request.httpMethod = "GET"
         }
         return request
+    }
+    
+    // Fetch data using a continuation to avoid warnings about non-Sendable types.
+    private func fetchData(with urlRequest: URLRequest) async throws -> (Data, URLResponse) {
+        return try await withCheckedThrowingContinuation { continuation in
+            let task = urlSession.dataTask(with: urlRequest) { data, response, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else if let data = data, let response = response {
+                    continuation.resume(returning: (data, response))
+                } else {
+                    continuation.resume(throwing: URLError(.unknown))
+                }
+            }
+            task.resume()
+        }
     }
 }

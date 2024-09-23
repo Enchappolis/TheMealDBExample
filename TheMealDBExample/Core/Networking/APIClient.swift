@@ -15,11 +15,13 @@ final class APIClient {
         self.networkManager = networkManager
     }
 
+    @MainActor
     func fetchDesserts() async throws -> MealResponse {
         let endpoint = APIEndpoint.filterByCategory(category: MealCategory.dessert.value)
         return try await networkManager.request(endpoint: endpoint, responseType: MealResponse.self)
     }
 
+    @MainActor
     func fetchMealDetail(id: String) async throws -> MealDetail {
         
         let endpoint = APIEndpoint.lookupMeal(id: id)

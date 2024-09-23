@@ -15,17 +15,26 @@ final class DessertViewModelTests: NetworkManagerTesting {
     var dessertViewModel: DessertViewModel!
     var cancellables: Set<AnyCancellable> = []
     
-    override func setUpWithError() throws {
-
-        try super.setUpWithError()
+    override func setUp() async throws {
+        
+        try await super.setUp()
        
-        networkManager = try getMockNetworkManagerUsingDataFrom(file: "MockMealResponse")
+        networkManager = try await getMockNetworkManagerUsingDataFrom(file: "MockMealResponse")
         
         XCTAssertNotNil(networkManager, "NetworkManager is nil")
         
         let apiClient = APIClient(networkManager: networkManager!)
         
-        dessertViewModel = DessertViewModel(apiClient: apiClient)
+        dessertViewModel = await DessertViewModel(apiClient: apiClient)
+    }
+    
+    override func tearDown() async throws {
+        
+        try await super.tearDown()
+
+        networkManager = nil
+        dessertViewModel = nil
+        cancellables.removeAll()
     }
     
     override func tearDownWithError() throws {
@@ -43,7 +52,7 @@ final class DessertViewModelTests: NetworkManagerTesting {
         let expectation = XCTestExpectation(description: "Dessert should be loaded")
         
         // Observe the state property.
-        dessertViewModel.$state
+        await dessertViewModel.$state
             .dropFirst() // Drop the initial value (idle)
             .sink { state in
                 switch state {
@@ -75,7 +84,7 @@ final class DessertViewModelTests: NetworkManagerTesting {
         let expectation = XCTestExpectation(description: "Dessert should be loaded")
         
         // Observe the state property.
-        dessertViewModel.$state
+        await dessertViewModel.$state
             .dropFirst() // Drop the initial value (idle)
             .sink { state in
                 switch state {
