@@ -53,17 +53,17 @@ final class MockDataTests: XCTestCase {
 
         XCTAssertEqual(meal?.thumbnailURL, URL(string: "https://www.themealdb.com/images/media/meals/xrysxr1483568462.jpg"), "Meal has wrong url.")
         
-        XCTAssertNotNil(meal?.ingredient1, "ingredient1 is nil")
+        XCTAssertNotNil(meal?.ingredientMeasures[0].ingredient, "ingredient1 is nil")
         
-        XCTAssertEqual(meal?.ingredient1, "Chocolate Chips", "ingredient1 has wrong ingredient.")
+        XCTAssertEqual(meal?.ingredientMeasures[0].ingredient, "Chocolate Chips", "ingredient1 has wrong ingredient.")
         
-        XCTAssertNotNil(meal?.ingredient2, "ingredient2 is nil")
+        XCTAssertNotNil(meal?.ingredientMeasures[1].ingredient, "ingredient2 is nil")
         
-        XCTAssertEqual(meal?.ingredient2, "Heavy Cream", "ingredient2 has wrong ingredient.")
+        XCTAssertEqual(meal?.ingredientMeasures[1].ingredient, "Heavy Cream", "ingredient2 has wrong ingredient.")
 
-        XCTAssertNotNil(meal?.ingredient3, "ingredient3 is nil")
+        XCTAssertNotNil(meal?.ingredientMeasures[2].ingredient, "ingredient3 is nil")
         
-        XCTAssertEqual(meal?.ingredient3, "Condensed Milk", "ingredient3 has wrong ingredient.")
+        XCTAssertEqual(meal?.ingredientMeasures[2].ingredient, "Condensed Milk", "ingredient3 has wrong ingredient.")
     }
     
     func test_wrong_file_throws_error() {

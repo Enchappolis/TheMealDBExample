@@ -83,18 +83,18 @@ struct DessertDetailContentView: View {
             HorizontalLine()
                 .offset(y: -6)
             
-            ForEach(mealDetail.allIngredientsWithMeasures.sorted(by: >), id: \.key) { ingredient, measure in
+            ForEach(mealDetail.ingredientMeasures) { ingredientMeasure in
                 
                 HStack {
                     
-                    ingredientImage(name: ingredient)
+                    ingredientImage(name: ingredientMeasure.ingredient)
                         .frame(width: 60, height: 60)
                     
                     VStack(alignment: .leading) {
-                        Text(ingredient)
+                        Text(ingredientMeasure.ingredient)
                             .font(.subheadline)
                         
-                        Text(measure)
+                        Text(ingredientMeasure.measure)
                             .font(.subheadline)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
