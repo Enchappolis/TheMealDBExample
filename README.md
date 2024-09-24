@@ -6,9 +6,11 @@
 ### The app was built with
 - SwiftUI
 - Minimum deployment target of iOS 15.0
-- Xcode 15.3
+- Xcode 15.4
+- Built to be compatible with Swift 6
 - MVVM
 - Async/Await
+- Dynamic decoding
 - Image caching to memory and disk
 - Designed with reusability and separation of concerns in mind
 - Unit testing
@@ -18,7 +20,7 @@
 The app has several limitations.
 - It uses a deployment target of iOS 15. Newer iOS versions simplify navigation with features like NavigationStack, navigationDestination, and router pattern.
 - The app simulates a restaurent app. The images in a restaurant menu rarely change. Therefore the app uses image caching to improve performance.
-  But there needs to be a way to refresh the cached images. In a production app, it could be done by checking the date or by providing an refresh property in the json response.
+  But there needs to be a way to refresh the cached images. In a production app, it could be done by checking the date or by providing a refresh property in the json response.
   In this app, it is done by doing a pull-to-refresh.
 - The API documentation does not specify the data type of each value in the json response object. 
   It was therefore assumed that all data types are of type String.
